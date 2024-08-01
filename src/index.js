@@ -4,6 +4,7 @@ import { engine } from 'express-handlebars';
 import {join, dirname} from 'path'
 import {fileURLToPath} from 'url'
 import personasRoutes from './routes/personas.routes.js'
+import authRoutes from './routes/auth.routes.js'
 
 //Intialization
 const app = express();
@@ -25,6 +26,9 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
+app.use("/api",authRoutes);
+
+
 //Routes
 app.get('/', (req, res)=>{
     res.render('index')
@@ -38,3 +42,5 @@ app.use(express.static(join(__dirname, 'public')));
 //Run Server
 app.listen(app.get('port'), ()=>
     console.log('Server listening on port', app.get('port')));
+
+export default app;
