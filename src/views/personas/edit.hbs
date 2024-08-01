@@ -15,10 +15,11 @@
                         <label for="lastname" class="input-group-text">Apellido</label>
                         <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Ejemplo: Tarazona" value="{{persona.lastname}}" required>
                     </div>
-                    <div class="input-group mt-2">
-                        <label for="age" class="input-group-text">Edad</label>
-                        <input class="form-control" type="number" name="age" id="age" value="{{persona.age}}" min ={0} placeholder="0" required>
-                    </div>
+                      <div class="input-group mt-2">
+                     <label for="age" class="input-group-text">Edad</label>
+    <input class="form-control" type="number" name="age" id="age" value="{{persona.age}}" min="0" placeholder="0" required>
+</div>
+
                     <div class="form-group mt-4 d-grid gap-2">
                         <button class="btn btn-success"> Actualizar</button>
                     </div>
