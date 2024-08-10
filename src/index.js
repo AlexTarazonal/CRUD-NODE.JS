@@ -1,10 +1,13 @@
 import express from 'express'
 import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
 import { engine } from 'express-handlebars';
 import {join, dirname} from 'path'
 import {fileURLToPath} from 'url'
 import personasRoutes from './routes/personas.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import taskRoutes from './routes/tasks.routes.js'
+import { sequelize } from './database.js'
 
 //Intialization
 const app = express();
@@ -25,8 +28,10 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api",authRoutes);
+app.use("/api",taskRoutes);
 
 
 //Routes
@@ -40,7 +45,15 @@ app.use(personasRoutes);
 app.use(express.static(join(__dirname, 'public')));
 
 //Run Server
-app.listen(app.get('port'), ()=>
-    console.log('Server listening on port', app.get('port')));
+sequelize.sync({ alter: true }) // Esto sincroniza la base de datos
+    .then(() => {
+        console.log('Database & tables synced!');
+        app.listen(app.get('port'), () => 
+            console.log('Server listening on port', app.get('port'))
+        );
+    })
+    .catch(error => {
+        console.error('Unable to sync database:', error.message);
+    });
 
 export default app;

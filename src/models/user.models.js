@@ -10,9 +10,10 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
-    trim: true,
-    
+    unique: true,  // Asegúrate de que no haya más de una declaración UNIQUE en este campo
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: DataTypes.STRING,
